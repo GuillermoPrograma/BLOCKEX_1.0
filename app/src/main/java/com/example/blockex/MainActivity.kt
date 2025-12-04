@@ -17,6 +17,6 @@ class MainActivity : AppCompatActivity() {
             insets
 
         }
-        val prueba:String
+        val prueba: Int
     }
 }
