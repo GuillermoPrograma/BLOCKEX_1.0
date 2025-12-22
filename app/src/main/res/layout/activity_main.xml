@@ -1,19 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ebd3a2"
     tools:context=".MainActivity">
 
+    <!-- 1. EL ENCABEZADO (TÍTULO) -->
+    <!-- Un texto grande, negrita y con color oscuro para dar jerarquía -->
+
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:id="@+id/tvTituloApp"
+        android:layout_width="252dp"
+        android:layout_height="36dp"
+        android:letterSpacing="-0.02"
+        android:text="BLOCKEX"
+        android:textColor="#1F1F1F"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.773"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.291" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="154dp"
+        android:layout_height="180dp"
+        android:src="@drawable/img"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.462"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cargando...."
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.889" />
+
+    <!-- 2. SUBTÍTULO O FECHA (Opcional, decorativo) -->
+
+    <!-- 3. BOTÓN DE FILTRO -->
+    <!-- Lo colocamos a la derecha del título o debajo, estilo 'Chip' o botón moderno -->
+
+    <!-- 4. LÍNEA SEPARADORA SUTIL (Opcional) -->
+
+    <!-- 5. LA LISTA DE PELÍCULAS -->
+    <!--
+         android:clipToPadding="false": Truco PRO para que al hacer scroll
+         el contenido no se corte bruscamente arriba, pero mantenga el margen inicial.
+    -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
