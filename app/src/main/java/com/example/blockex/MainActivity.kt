@@ -1,6 +1,8 @@
 package com.example.blockex
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -17,6 +19,14 @@ class MainActivity : AppCompatActivity() {
             insets
 
         }
+
+            val boton=findViewById<Button>(R.id.ajustes)
+            boton.setOnClickListener {
+                val intento=Intent(this, AjustesActivity::class.java)
+                startActivity(intento)
+            }
+
+
 
     }
 }
