@@ -20,11 +20,6 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-            val boton=findViewById<Button>(R.id.ajustes)
-            boton.setOnClickListener {
-                val intento=Intent(this, AjustesActivity::class.java)
-                startActivity(intento)
-            }
 
 
 
