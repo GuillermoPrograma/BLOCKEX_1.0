@@ -26,7 +26,11 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-
+        val botonTiempo=findViewById<Button>(R.id.seleccionTiempo)
+        botonTiempo.setOnClickListener{
+            val intent= Intent(this, SeleccionTiempoActivity::class.java)
+            startActivity(intent)
+        }
 
     }
 }
