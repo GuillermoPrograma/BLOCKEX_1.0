@@ -44,6 +44,7 @@
         app:layout_constraintVertical_bias="0.972"
         app:srcCompat="@drawable/img_3" />
 
+
     <TextView
         android:id="@+id/diarioTV"
         android:layout_width="66dp"
@@ -56,10 +57,10 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.056" />
-
 
     <ScrollView
         android:id="@+id/svDescripcion"
@@ -102,18 +103,18 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.144" />
 
+
     <Button
         android:id="@+id/Guardar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Guardar"
+        app:backgroundTint="#848061"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.758" />
-
 
     <ImageView
         android:id="@+id/imageView4"

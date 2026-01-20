@@ -42,14 +42,15 @@
         android:id="@+id/button"
         android:layout_width="148dp"
         android:layout_height="48dp"
-        android:background="@color/verde"
         android:text="Permisos"
+        app:backgroundTint="#848061"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.486"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.562"
+        app:cornerRadius="0dp"
         tools:ignore="MissingConstraints" />
 
     <Button
@@ -57,13 +58,14 @@
         android:layout_width="145dp"
         android:layout_height="45dp"
         android:text="Privacidad"
-        android:background="@color/verde"
+        app:backgroundTint="#848061"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.481"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.465"
+        app:cornerRadius="0dp"
         tools:ignore="MissingConstraints" />
 
     <TextView

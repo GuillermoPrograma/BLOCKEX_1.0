@@ -182,6 +182,7 @@
         android:layout_width="131dp"
         android:layout_height="59dp"
         android:text="Confirmar"
+        app:backgroundTint="#848061"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.485"
