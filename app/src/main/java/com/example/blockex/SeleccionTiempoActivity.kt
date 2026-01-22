@@ -62,7 +62,7 @@ class SeleccionTiempoActivity : AppCompatActivity() {
                     // Acumular delta para actualizar tiempo
                     rotationAccumulator += delta
 
-                    // Incrementar/decrementar tiempo cuando se supera umbral
+                    // Incrementar/decrementar tiempo cuando se supera umbral s
                     if (rotationAccumulator > 15f) {
                         incrementarTiempo()
                         rotationAccumulator = 0f
