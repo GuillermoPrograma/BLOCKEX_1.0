@@ -60,12 +60,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Meses"
+                android:layout_marginBottom="5dp"
 
-                android:textSize="14sp"
-                android:textColor="@android:color/black"
+                android:fontFamily="@font/noto_serif"
                 android:gravity="center"
-                android:layout_marginBottom="5dp"/>
+                android:text="Meses"
+                android:textColor="@android:color/black"
+                android:textSize="14sp" />
 
             <com.google.android.material.textfield.TextInputLayout
 
@@ -79,10 +80,12 @@
                     android:id="@+id/textoMeses"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:fontFamily="@font/noto_serif"
                     android:gravity="center"
-                    android:text="01"
                     android:inputType="number"
-                    android:textSize="20sp"/>
+                    android:text="01"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
 
@@ -97,12 +100,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Semanas"
+                android:layout_marginBottom="5dp"
 
-                android:textSize="14sp"
-                android:textColor="@android:color/black"
+                android:fontFamily="@font/noto_serif"
                 android:gravity="center"
-                android:layout_marginBottom="5dp"/>
+                android:text="Semanas"
+                android:textColor="@android:color/black"
+                android:textSize="14sp" />
 
             <com.google.android.material.textfield.TextInputLayout
 
@@ -116,10 +120,12 @@
                     android:id="@+id/textoSemanas"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:fontFamily="@font/noto_serif"
                     android:gravity="center"
-                    android:text="01"
                     android:inputType="number"
-                    android:textSize="20sp"/>
+                    android:text="01"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
 
@@ -134,11 +140,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Días"
-                android:textSize="14sp"
-                android:textColor="@android:color/black"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/noto_serif"
                 android:gravity="center"
-                android:layout_marginBottom="5dp"/>
+                android:text="Días"
+                android:textColor="@android:color/black"
+                android:textSize="14sp" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -151,10 +158,12 @@
                     android:id="@+id/textoDias"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:fontFamily="@font/noto_serif"
                     android:gravity="center"
-                    android:text="01"
                     android:inputType="number"
-                    android:textSize="20sp"/>
+                    android:text="01"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
 
@@ -186,6 +195,7 @@
         android:layout_width="131dp"
         android:layout_height="59dp"
         android:text="Confirmar"
+        android:fontFamily="@font/noto_serif"
         app:backgroundTint="#848061"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

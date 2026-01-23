@@ -15,6 +15,7 @@
         android:layout_width="128dp"
         android:layout_height="34dp"
         android:text="AJUSTES"
+        android:textAlignment="center"
         android:textColorLink="@color/white"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -27,15 +28,14 @@
 
     <CheckBox
         android:id="@+id/checkBox"
-        android:layout_width="221dp"
-        android:layout_height="39dp"
+        android:layout_width="191dp"
+        android:layout_height="32dp"
         android:text="Enviarme notificaciones"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.563"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.356"
+        app:layout_constraintVertical_bias="0.351"
         tools:ignore="MissingConstraints" />
 
     <Button

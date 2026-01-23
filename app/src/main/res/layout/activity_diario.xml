@@ -9,18 +9,13 @@
     tools:context=".DiarioActivity">
 
 
-
-
-
-
-
-
     <TextView
         android:id="@+id/diarioTV"
         android:layout_width="66dp"
         android:layout_height="27dp"
         android:layout_marginStart="176dp"
         android:layout_marginEnd="177dp"
+        android:fontFamily="@font/noto_serif"
         android:text="Diario"
         android:textAlignment="center"
         android:textSize="20sp"
@@ -50,6 +45,7 @@
         app:layout_constraintVertical_bias="0.374">
 
         <EditText
+            android:fontFamily="@font/noto_serif"
             android:id="@+id/etDescripcion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -66,7 +62,10 @@
         android:id="@+id/tvFechaHoy"
         android:layout_width="397dp"
         android:layout_height="30dp"
+        android:fontFamily="@font/noto_serif"
+        android:text="FechaHoy"
         android:textAlignment="center"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -76,33 +75,33 @@
 
     <ImageButton
         android:id="@+id/btnImagen"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/guardarimagen"
-        android:contentDescription="Botón imagen"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
         android:background="?attr/selectableItemBackgroundBorderless"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:contentDescription="Botón imagen"
+        android:src="@drawable/guardarimagen"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.758" />
-
+        app:layout_constraintTop_toBottomOf="@+id/svDescripcion"
+        app:layout_constraintVertical_bias="0.5" />
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-
+        android:background="#848061"
+        app:itemIconSize="40dp"  app:itemIconTint="@null"
+        app:itemActiveIndicatorStyle="@null"
+        app:itemPaddingTop="10dp"
+        app:itemPaddingBottom="10dp"
         app:labelVisibilityMode="unlabeled"
-
-        app:itemIconTint="@null"
-
-        app:itemIconSize="70dp"
-
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/menuprueba" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
