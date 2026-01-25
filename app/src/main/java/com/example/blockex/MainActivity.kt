@@ -3,12 +3,17 @@ package com.example.blockex
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.preference.PreferenceManager
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var fechaTextView: TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -45,5 +50,18 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        fechaTextView = findViewById(R.id.fecha)
+        mostrarFechaConfigurada()
+
+    }
+    private fun mostrarFechaConfigurada() {
+        // Leer los valores guardados
+        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+        val meses = prefs.getInt("tiempo_meses", 0)
+        val semanas = prefs.getInt("tiempo_semanas", 0)
+        val dias = prefs.getInt("tiempo_dias", 0)
+
+        val texto = "${meses} meses, ${semanas} semanas, ${dias} días"
+        fechaTextView.text = texto
     }
 }
