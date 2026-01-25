@@ -38,6 +38,12 @@ class MainActivity : AppCompatActivity() {
             val  intent= Intent(this, DiarioActivity ::class.java)
             startActivity(intent)
         }
+        val calendarBtn=findViewById<Button>(R.id.btnCal)
+        calendarBtn.setOnClickListener{
+
+            val  intent= Intent(this, CalendarioActivity ::class.java)
+            startActivity(intent)
+        }
 
     }
 }
