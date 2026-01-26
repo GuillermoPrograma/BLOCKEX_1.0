@@ -44,7 +44,7 @@ class CalendarioActivity : AppCompatActivity() {
         btnPrevMonth = findViewById(R.id.btnPrevMonth)
         btnNextMonth = findViewById(R.id.btnNextMonth)
 
-        // 3. LLAMADA A FUNCIONES DE CONFIGURACIÓN
+        // 3. LLAMADA A FUNCIONES DE CONFIGURACIÓNS
         configurarCalendario()
         configurarCabeceraDias()
         configurarNavegacionMeses()

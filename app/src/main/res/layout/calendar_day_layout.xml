@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="48dp">
@@ -7,8 +8,8 @@
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:layout_gravity="center"
-        android:visibility="gone"
-        android:background="@drawable/selected_day_bg" />
+        android:background="@drawable/selected_day_bg"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/calendarDayText"
@@ -16,6 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="1"
-        android:textColor="@android:color/black"
+        android:textColor="#000000"
         android:textSize="16sp" />
+
 </FrameLayout>
