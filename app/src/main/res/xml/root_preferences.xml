@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Categoría general -->
+    <PreferenceCategory
+        app:title="General">
+
+        <!-- Switch para activar/desactivar notificaciones -->
+        <SwitchPreferenceCompat
+            app:key="notificaciones"
+            app:title="Recibir notificaciones"
+            app:summary="Activa para recibir avisos"
+            app:defaultValue="true" />
+    </PreferenceCategory>
+
+</PreferenceScreen>
