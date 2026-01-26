@@ -20,7 +20,7 @@ class SelectorFotos : AppCompatActivity() {
 
     /**
      * Selector de múltiples imágenes usando
-     * Storage Access Framework (muy estable) zmksdls
+     * Storage Access Framework (muy estable)
      */
     private val seleccionarImgs =
         registerForActivityResult(ActivityResultContracts.OpenMultipleDocuments()) { uris ->
@@ -140,7 +140,7 @@ class SelectorFotos : AppCompatActivity() {
      * Restaura las imágenes a la galería
      */
     private fun restaurarFotos() {
-        val hiddenDir = File(cacheDir, "hidden_images")
+        val hiddenDir = File(filesDir, "hidden_images")
 
         hiddenDir.listFiles()?.forEach { file ->
             val values = ContentValues().apply {
@@ -169,7 +169,7 @@ class SelectorFotos : AppCompatActivity() {
      * Borra definitivamente los archivos ocultos
      */
     private fun borrarDefinitivo() {
-        File(cacheDir, "hidden_images").deleteRecursively()
+        File(filesDir, "hidden_images").deleteRecursively()
     }
 
     /**
