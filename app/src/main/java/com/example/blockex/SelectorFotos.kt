@@ -20,7 +20,7 @@ class SelectorFotos : AppCompatActivity() {
 
     /**
      * Selector de múltiples imágenes usando
-     * Storage Access Framework (muy estable)
+     * Storage Access Framework (muy estable) zmksdls
      */
     private val seleccionarImgs =
         registerForActivityResult(ActivityResultContracts.OpenMultipleDocuments()) { uris ->
