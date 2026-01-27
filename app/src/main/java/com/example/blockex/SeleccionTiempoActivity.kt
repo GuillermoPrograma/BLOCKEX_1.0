@@ -11,6 +11,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.textfield.TextInputEditText
 import androidx.preference.PreferenceManager
+import java.time.LocalDate
 
 class SeleccionTiempoActivity : AppCompatActivity() {
 
@@ -121,11 +122,19 @@ class SeleccionTiempoActivity : AppCompatActivity() {
     // Guardar en SharedPreferences
     private fun guardarTiempoEnPreferencias() {
         val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+
+        val fechaHoy = LocalDate.now().toString() // Formato "YYYY-MM-DD"
         prefs.edit().apply {
             putInt("tiempo_meses", meses.text.toString().toIntOrNull() ?: 0)
             putInt("tiempo_semanas", semanas.text.toString().toIntOrNull() ?: 0)
             putInt("tiempo_dias", dias.text.toString().toIntOrNull() ?: 0)
+
+            putString("fecha_inicio_configuracion", fechaHoy)
+
+
             putBoolean("tiempo_configurado", true) // marca que ya configuró
+
+
             apply()
         }
     }

@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.preference.PreferenceManager
+import java.time.LocalDate
 
 class MainActivity : AppCompatActivity() {
 
@@ -57,10 +58,15 @@ class MainActivity : AppCompatActivity() {
     private fun mostrarFechaConfigurada() {
         // Leer los valores guardados
         val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+        val fechaString = prefs.getString("fecha_inicio_configuracion", null)
         val meses = prefs.getInt("tiempo_meses", 0)
         val semanas = prefs.getInt("tiempo_semanas", 0)
         val dias = prefs.getInt("tiempo_dias", 0)
-
+        if (fechaString != null) {
+            val fechaGuardada = LocalDate.parse(fechaString)
+            // Ejemplo: ¿Qué día será en 1 mes?
+            println("La configuración se hizo el: $fechaGuardada")
+        }
         val texto = "${meses} meses, ${semanas} semanas, ${dias} días"
         fechaTextView.text = texto
     }

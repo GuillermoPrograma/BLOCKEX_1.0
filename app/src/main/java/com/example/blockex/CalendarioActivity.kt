@@ -21,7 +21,9 @@ import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.TextStyle
 import java.util.Locale
-
+import java.time.temporal.ChronoUnit
+import androidx.preference.PreferenceManager
+import android.util.Log
 class CalendarioActivity : AppCompatActivity() {
 
     // 1. PROPIEDADES DE LA CLASE (Fuera de onCreate)
@@ -50,6 +52,8 @@ class CalendarioActivity : AppCompatActivity() {
         configurarCalendario()
         configurarCabeceraDias()
         configurarNavegacionMeses()
+
+        actualizarContadorSanacion()
         // ... dentro de onCreate ...
         val nav = findViewById<BottomNavigationView>(R.id.bottomNavigation)
         nav.setupNavigation(this, R.id.nav_calendario)
@@ -73,7 +77,7 @@ class CalendarioActivity : AppCompatActivity() {
                         else selectedDates.add(date)
 
                         calendarView.notifyDateChanged(date)
-                        contadorTxt.text = "Llevas ${selectedDates.size} días de sanación"
+                      //  contadorTxt.text = "Llevas ${selectedDates.size} días de sanación"
                     }
                 } else {
                     container.textView.visibility = View.INVISIBLE
@@ -141,4 +145,67 @@ class CalendarioActivity : AppCompatActivity() {
         // Cambiamos View por ImageView
         val selectionView: ImageView = view.findViewById(R.id.exFiveDaySelectionView)
     }
+
+
+
+    private fun verificarPlazo() {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+
+        // 1. Recuperar la fecha en que se configuró
+        val fechaInicioStr = prefs.getString("fecha_inicio_configuracion", null)
+        val tiempoConfigurado = prefs.getBoolean("tiempo_configurado", false)
+
+        if (fechaInicioStr != null && tiempoConfigurado) {
+            // Convertir el String guardado de vuelta a LocalDate
+            val fechaInicio = LocalDate.parse(fechaInicioStr)
+
+            // 2. Recuperar el tiempo que el usuario eligió
+            val m = prefs.getInt("tiempo_meses", 0).toLong()
+            val s = prefs.getInt("tiempo_semanas", 0).toLong()
+            val d = prefs.getInt("tiempo_dias", 0).toLong()
+
+            // 3. Calcular la fecha de vencimiento sumando los periodos
+            val fechaVencimiento = fechaInicio
+                .plusMonths(m)
+                .plusWeeks(s)
+                .plusDays(d)
+
+            val hoy = LocalDate.now()
+
+            // 4. Calcular días restantes usando ChronoUnit que sirve para calcular fechas de manera exacta
+            val diasRestantes = ChronoUnit.DAYS.between(hoy, fechaVencimiento)
+
+            // 5. Lógica de control
+            if (diasRestantes <= 0) {
+
+                ejecutarAccionFinDePlazo()
+            } else {
+
+                //Aqui podriamos meter algo si es importante, aqui es donde le decimos que todavia le quedan
+            }
+        }
+    }
+
+    private fun ejecutarAccionFinDePlazo() {
+        //aqui donde va la parte de pilar
+    }
+
+    private fun actualizarContadorSanacion() { //esto para actualizar los días que llevas en la app!!
+        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+        val fechaInicioStr = prefs.getString("fecha_inicio_configuracion", null)
+
+        if (fechaInicioStr != null) {
+            val fechaInicio = LocalDate.parse(fechaInicioStr)
+            val hoy = LocalDate.now()
+
+            // Calculamos los días que han pasado desde el inicio hasta hoy
+            // Usamos maxOf(0, ...) para evitar números negativos si el usuario configuró la fecha para el futuro
+            val diasTranscurridos = maxOf(0, ChronoUnit.DAYS.between(fechaInicio, hoy))
+
+            contadorTxt.text = "Llevas $diasTranscurridos usando Blockex"
+        } else {
+            contadorTxt.text = "Configura tu tiempo para empezar"
+        }
+    }
+
 }
