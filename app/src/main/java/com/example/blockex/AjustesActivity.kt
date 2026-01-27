@@ -6,6 +6,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class AjustesActivity : AppCompatActivity() {
 
@@ -25,6 +26,9 @@ class AjustesActivity : AppCompatActivity() {
             mostrarDialogoAvisoLegal()
 
         }
+        //mar: he tocado esto de abajo para que funcione la barra de navegación :)))
+        val nav = findViewById<BottomNavigationView>(R.id.bottomNavigation)
+        nav.setupNavigation(this, R.id.nav_ajustes)
     }
     private fun mostrarDialogoAvisoLegal() {
         val builder = androidx.appcompat.app.AlertDialog.Builder(this)

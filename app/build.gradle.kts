@@ -53,5 +53,6 @@ dependencies {
     implementation("com.google.android.material:material:1.12.0")
     implementation("com.kizitonwose.calendar:view:2.4.0")//calendario
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")//fechas
+    implementation("androidx.preference:preference-ktx:1.2.1")
 
 }

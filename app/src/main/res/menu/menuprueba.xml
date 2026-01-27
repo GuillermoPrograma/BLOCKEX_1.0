@@ -1,16 +1,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/nav_home"
+        android:id="@+id/nav_diario"
         android:icon="@drawable/img_1"
-        android:title="Inicio" />
+        android:title="Diario" />
 
     <item
-        android:id="@+id/nav_search"
+        android:id="@+id/nav_calendario"
         android:icon="@drawable/img_2"
-        android:title="Buscar" />
+        android:title="Calendario" />
 
     <item
-        android:id="@+id/nav_profile"
+        android:id="@+id/nav_ajustes"
         android:icon="@drawable/img_3"
-        android:title="Perfil" />
+        android:title="Ajustes" />
 </menu>

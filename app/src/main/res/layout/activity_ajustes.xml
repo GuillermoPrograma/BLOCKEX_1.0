@@ -98,10 +98,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#848061"
-        app:itemIconSize="40dp"  app:itemIconTint="@null"
+        app:itemIconSize="40dp"  app:itemIconTint="@color/nav_item_color"  app:itemTextColor="@color/nav_item_color"
         app:itemActiveIndicatorStyle="@null"
         app:itemPaddingTop="10dp"
         app:itemPaddingBottom="10dp"
+
         app:labelVisibilityMode="unlabeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
