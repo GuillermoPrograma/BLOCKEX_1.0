@@ -5,9 +5,11 @@ import android.graphics.Typeface
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.kizitonwose.calendar.core.CalendarDay
 import com.kizitonwose.calendar.core.DayPosition
 import com.kizitonwose.calendar.core.daysOfWeek
@@ -48,6 +50,9 @@ class CalendarioActivity : AppCompatActivity() {
         configurarCalendario()
         configurarCabeceraDias()
         configurarNavegacionMeses()
+        // ... dentro de onCreate ...
+        val nav = findViewById<BottomNavigationView>(R.id.bottomNavigation)
+        nav.setupNavigation(this, R.id.nav_calendario)
     }
 
     // 4. MÉTODOS DE CONFIGURACIÓN (Fuera de onCreate para que sea limpio)
@@ -133,6 +138,7 @@ class CalendarioActivity : AppCompatActivity() {
     // 5. EL VIEWCONTAINER (Siempre fuera de las funciones, dentro de la clase)
     inner class DayViewContainer(view: View) : ViewContainer(view) {
         val textView: TextView = view.findViewById(R.id.calendarDayText)
-        val selectionView: View = view.findViewById(R.id.exFiveDaySelectionView)
+        // Cambiamos View por ImageView
+        val selectionView: ImageView = view.findViewById(R.id.exFiveDaySelectionView)
     }
 }

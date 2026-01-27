@@ -35,6 +35,19 @@
         app:srcCompat="@drawable/corazon_png" />
 
     <!-- Botón seleccionar fotos -->
+    <ImageButton
+        android:id="@+id/btnImagen"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_marginTop="16dp"
+        android:adjustViewBounds="true"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Botón Baul"
+        android:scaleType="fitCenter"
+        android:src="@drawable/img_5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageView5" />
 
     <!-- Botón confirmar -->
 
