@@ -13,6 +13,7 @@
         android:visibility="gone" />
 
     <TextView
+        android:fontFamily="@font/noto_serif_semibold_italic"
         android:id="@+id/calendarDayText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

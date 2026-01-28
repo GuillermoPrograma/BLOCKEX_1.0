@@ -15,6 +15,7 @@
         android:layout_width="128dp"
         android:layout_height="34dp"
         android:text="AJUSTES"
+        android:fontFamily="@font/noto_serif_semibold_italic"
         android:textAlignment="center"
         android:textColorLink="@color/white"
         android:textSize="24sp"
@@ -28,8 +29,9 @@
 
     <CheckBox
         android:id="@+id/checkBox"
-        android:layout_width="191dp"
-        android:layout_height="32dp"
+        android:layout_width="209dp"
+        android:layout_height="39dp"
+        android:fontFamily="@font/noto_serif_semibold_italic"
         android:text="Enviarme notificaciones"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -39,6 +41,7 @@
         tools:ignore="MissingConstraints" />
 
     <Button
+        android:fontFamily="@font/noto_serif_semibold_italic"
         android:id="@+id/button"
         android:layout_width="148dp"
         android:layout_height="48dp"
@@ -54,6 +57,7 @@
         tools:ignore="MissingConstraints" />
 
     <Button
+        android:fontFamily="@font/noto_serif_semibold_italic"
         android:id="@+id/button2"
         android:layout_width="145dp"
         android:layout_height="45dp"
@@ -69,6 +73,7 @@
         tools:ignore="MissingConstraints" />
 
     <TextView
+        android:fontFamily="@font/noto_serif_semibold_italic"
         android:id="@+id/textView2"
         android:layout_width="194dp"
         android:layout_height="38dp"

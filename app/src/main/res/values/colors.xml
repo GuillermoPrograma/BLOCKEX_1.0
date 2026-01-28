@@ -4,4 +4,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="verde">#848061</color>
     <color name="gris">#EBD3A2</color>
+    <color name="icono_blockex_background">#EBD3A2</color>
 </resources>

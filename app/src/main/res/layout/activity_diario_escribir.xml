@@ -10,12 +10,13 @@
 
 
     <TextView
+
         android:id="@+id/diarioTV"
         android:layout_width="66dp"
         android:layout_height="27dp"
         android:layout_marginStart="176dp"
         android:layout_marginEnd="177dp"
-        android:fontFamily="@font/noto_serif"
+        android:fontFamily="@font/noto_serif_semibold_italic"
         android:text="Diario"
         android:textAlignment="center"
         android:textSize="20sp"
@@ -45,7 +46,8 @@
         app:layout_constraintVertical_bias="0.374">
 
         <EditText
-            android:fontFamily="@font/noto_serif"
+
+            android:fontFamily="@font/noto_serif_semibold_italic"
             android:id="@+id/etDescripcion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -59,10 +61,11 @@
     </ScrollView>
 
     <TextView
+
         android:id="@+id/tvFechaHoy"
         android:layout_width="397dp"
         android:layout_height="30dp"
-        android:fontFamily="@font/noto_serif"
+        android:fontFamily="@font/noto_serif_semibold_italic"
         android:text="FechaHoy"
         android:textAlignment="center"
         android:textSize="14sp"

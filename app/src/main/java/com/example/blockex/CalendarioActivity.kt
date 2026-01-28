@@ -177,7 +177,7 @@ class CalendarioActivity : AppCompatActivity() {
     }
 
     private fun ejecutarAccionFinDePlazo() {
-        // Tu lógica de fin de plazo
+        // AQUI ES DONDE BA LO DE PILAR
     }
 
     private fun actualizarContadorSanacion() {

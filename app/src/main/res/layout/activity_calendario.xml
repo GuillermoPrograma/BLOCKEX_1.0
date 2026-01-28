@@ -14,6 +14,7 @@
         android:padding="16dp">
 
         <TextView
+            android:fontFamily="@font/noto_serif_semibold_italic"
             android:id="@+id/contadorTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -38,6 +39,7 @@
                 app:tint="#4E4E4E" />
 
             <TextView
+                android:fontFamily="@font/noto_serif_semibold_italic"
                 android:id="@+id/monthText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
