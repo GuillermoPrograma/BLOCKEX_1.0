@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         val botonDiario=findViewById<Button>(R.id.DiarioBtn)
         botonDiario.setOnClickListener{
 
-            val  intent= Intent(this, DiarioActivity ::class.java)
+            val  intent= Intent(this, DiarioActivityEscribir ::class.java)
             startActivity(intent)
         }
         val calendarBtn=findViewById<Button>(R.id.btnCal)
