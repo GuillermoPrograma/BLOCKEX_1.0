@@ -15,7 +15,7 @@ fun BottomNavigationView.setupNavigation(activity: Activity, selectedItemId: Int
 
         when (item.itemId) {
             R.id.nav_diario -> {
-                activity.startActivity(Intent(activity, DiarioActivity::class.java))
+                activity.startActivity(Intent(activity, DiarioActivityEscribir::class.java))
                 activity.overridePendingTransition(0, 0)
                 true
             }
