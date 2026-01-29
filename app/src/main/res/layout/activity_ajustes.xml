@@ -14,14 +14,14 @@
         android:id="@+id/textView"
         android:layout_width="128dp"
         android:layout_height="34dp"
-        android:text="AJUSTES"
         android:fontFamily="@font/noto_serif_semibold_italic"
+        android:text="AJUSTES"
         android:textAlignment="center"
         android:textColorLink="@color/white"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.512"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.061"
@@ -37,65 +37,64 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.351"
+        app:layout_constraintVertical_bias="0.408"
         tools:ignore="MissingConstraints" />
 
     <Button
-        android:fontFamily="@font/noto_serif_semibold_italic"
         android:id="@+id/button"
         android:layout_width="148dp"
         android:layout_height="48dp"
+        android:fontFamily="@font/noto_serif_semibold_italic"
         android:text="Permisos"
         app:backgroundTint="#848061"
+        app:cornerRadius="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.486"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.562"
-        app:cornerRadius="0dp"
+        app:layout_constraintVertical_bias="0.626"
         tools:ignore="MissingConstraints" />
 
     <Button
-        android:fontFamily="@font/noto_serif_semibold_italic"
         android:id="@+id/button2"
         android:layout_width="145dp"
         android:layout_height="45dp"
+        android:fontFamily="@font/noto_serif_semibold_italic"
         android:text="Privacidad"
         app:backgroundTint="#848061"
+        app:cornerRadius="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.481"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.465"
-        app:cornerRadius="0dp"
+        app:layout_constraintVertical_bias="0.513"
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:fontFamily="@font/noto_serif_semibold_italic"
         android:id="@+id/textView2"
         android:layout_width="194dp"
         android:layout_height="38dp"
+        android:fontFamily="@font/noto_serif_semibold_italic"
         android:text="Páginas ayuda profesional"
         android:textColor="#249795"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.525"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.689" />
-
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="183dp"
-        android:layout_height="131dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.154"
+        app:layout_constraintVertical_bias="0.78" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="192dp"
+        android:layout_height="139dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.211"
         app:srcCompat="@drawable/corazon_png" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
