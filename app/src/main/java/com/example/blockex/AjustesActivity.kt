@@ -4,11 +4,14 @@ import android.Manifest
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.widget.Button
 import android.widget.CheckBox
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -64,6 +67,16 @@ class AjustesActivity : AppCompatActivity() {
         botonPrivacidad.setOnClickListener {
             mostrarDialogoAvisoLegal()
         }
+        val tvAyuda = findViewById<TextView>(R.id.textView2)
+
+// Configura el clic
+        tvAyuda.setOnClickListener {
+            val url = "https://fundacionpsf.org/"
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            startActivity(intent)
+        }
+        val nav = findViewById<BottomNavigationView>(R.id.bottomNavigation)
+        nav.setupNavigation(this, R.id.nav_ajustes)
     }
 
     // -----------------------------------------------------------------------
@@ -139,7 +152,21 @@ class AjustesActivity : AppCompatActivity() {
     private fun mostrarDialogoAvisoLegal() {
         val builder = androidx.appcompat.app.AlertDialog.Builder(this)
         builder.setTitle("Aviso Legal")
-        builder.setMessage("Términos y condiciones de BlockEx...")
+        builder.setMessage(
+                "\n" +
+                "En BlockEx, entendemos que la información que usted almacena en nuestra plataforma —desde sus reflexiones personales en el diario hasta sus fotografías y registros de calendario— constituye una parte fundamental de su intimidad. Por ello, la protección de su privacidad no es solo una obligación legal para nosotros, sino el pilar central de nuestra ética operativa.\n" +
+                "\n" +
+                "1. Naturaleza de la Información Reconocemos que BlockEx alberga datos de carácter altamente sensible. Tratamos todas las entradas de texto, archivos multimedia (fotografías/vídeos) y patrones de uso con la máxima confidencialidad.\n" +
+                "\n" +
+                "2. Almacenamiento y Soberanía de Datos Su información le pertenece exclusivamente a usted. BlockEx está diseñada para priorizar el almacenamiento seguro. No tenemos acceso al contenido de sus entradas ni a sus fotografías personales. No comercializamos, cedemos ni compartimos su información con terceros para fines publicitarios ni de análisis de comportamiento.\n" +
+                "\n" +
+                "3. Seguridad de Archivos Multimedia Entendemos el valor sentimental y privado de las imágenes adjuntas a sus registros. Implementamos protocolos de seguridad para garantizar que estas solo sean accesibles a través de la aplicación y bajo su autorización explícita.\n" +
+                "\n" +
+                "4. Control del Usuario Usted mantiene el control total sobre sus datos. BlockEx garantiza su derecho a acceder, modificar, exportar o eliminar permanentemente cualquier información registrada en la aplicación en el momento que lo desee.\n" +
+                "\n" +
+                "Agradecemos la confianza depositada en BlockEx para salvaguardar sus recuerdos y pensamientos más personales.\n" +
+                "\n"
+               )
         builder.setPositiveButton("Aceptar", null)
         builder.show()
     }
