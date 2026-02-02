@@ -49,6 +49,9 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+        <!-- AÑADE ESTO: El receptor de la alarma -->
+        <receiver android:name=".NotificacionReceiver" />
     </application>
 
 </manifest>

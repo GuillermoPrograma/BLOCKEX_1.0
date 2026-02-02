@@ -3,12 +3,14 @@ package com.example.blockex
 import android.Manifest
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.TextView
@@ -24,149 +26,158 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class AjustesActivity : AppCompatActivity() {
 
-    private val CHANNEL_ID = "canal_ajustes_blockex"
-    private val NOTIFICATION_ID = 101
-    private val PERMISSION_REQUEST_CODE = 1
+    private val CHANNEL_ID_POPUP = "canal_popup_blockex_urgente"
+    private val NOTIFICATION_ID = 777
+    private val CODIGO_PETICION_PERMISOS = 100
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_ajustes)
 
-        // Ajuste de márgenes para pantallas modernas
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, 0)
             insets
         }
 
+        // Referencias UI
         val checkBoxNotificaciones = findViewById<CheckBox>(R.id.checkBox)
         val botonPrivacidad = findViewById<Button>(R.id.button2)
+        val botonPermisos = findViewById<Button>(R.id.button)
+        val tvAyuda = findViewById<TextView>(R.id.textView2)
+        val nav = findViewById<BottomNavigationView>(R.id.bottomNavigation)
 
-        // 1. Crear el canal (Obligatorio para que funcionen las notificaciones)
-        createNotificationChannel()
+        // Inicializar
+        createHighPriorityChannel()
+        nav.setupNavigation(this, R.id.nav_ajustes)
 
-        // 2. Lógica del CheckBox
+        // Estado inicial del CheckBox (si tiene permisos, sale marcado)
+        checkBoxNotificaciones.isChecked = checkPermission()
+
+        // --- 1. BOTÓN PERMISOS (CAMBIO SOLICITADO) ---
+        botonPermisos.setOnClickListener {
+            // Simplemente abrimos la pantalla de ajustes de la app
+            val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+            val uri = Uri.fromParts("package", packageName, null)
+            intent.data = uri
+            startActivity(intent)
+        }
+
+        // --- 2. LÓGICA DEL CHECKBOX (NATIVA) ---
         checkBoxNotificaciones.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                // Si el usuario marca la casilla...
                 if (checkPermission()) {
-                    // Si ya tenemos permiso, lanzamos la notificación directa
-                    mostrarNotificacionPersonalizada()
+                    lanzarNotificacionPopUp()
                 } else {
-                    // Si NO tenemos permiso, lo pedimos
-                    // IMPORTANTE: Aquí llamamos a la función de abajo, no escribimos el código aquí dentro
-                    checkBoxNotificaciones.isChecked = false // Desmarcamos hasta que acepte
-                    requestPermission()
+                    // Desmarcamos visualmente y pedimos permiso nativo
+                    checkBoxNotificaciones.isChecked = false
+                    pedirPermisoNativoAndroid()
                 }
             } else {
                 Toast.makeText(this, "Notificaciones desactivadas", Toast.LENGTH_SHORT).show()
             }
         }
 
-        botonPrivacidad.setOnClickListener {
-            mostrarDialogoAvisoLegal()
-        }
-        val tvAyuda = findViewById<TextView>(R.id.textView2)
+        // --- 3. OTROS BOTONES ---
+        botonPrivacidad.setOnClickListener { mostrarDialogoAvisoLegal() }
 
-// Configura el clic
         tvAyuda.setOnClickListener {
             val url = "https://fundacionpsf.org/"
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-            startActivity(intent)
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
         }
-        val nav = findViewById<BottomNavigationView>(R.id.bottomNavigation)
-        nav.setupNavigation(this, R.id.nav_ajustes)
     }
 
-    // -----------------------------------------------------------------------
-    // AQUÍ ES DONDE VA EL CÓDIGO (FUNCIONES FUERA DEL ONCREATE)
-    // -----------------------------------------------------------------------
+    // --- FUNCIONES DE PERMISOS NATIVOS ---
 
-    private fun requestPermission() {
-        // Solo pedimos permiso en Android 13 (TIRAMISU) o superior
+    private fun pedirPermisoNativoAndroid() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-
-            // ESTE ES EL BLOQUE DE CÓDIGO POR EL QUE PREGUNTABAS:
             ActivityCompat.requestPermissions(
-                this, // Al estar en una función de la clase, 'this' ES la Activity. ¡Correcto!
+                this,
                 arrayOf(Manifest.permission.POST_NOTIFICATIONS),
-                PERMISSION_REQUEST_CODE
+                CODIGO_PETICION_PERMISOS
             )
+        } else {
+            // Android antiguos
+            val checkBox = findViewById<CheckBox>(R.id.checkBox)
+            checkBox.isChecked = true
+            lanzarNotificacionPopUp()
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        if (requestCode == CODIGO_PETICION_PERMISOS) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Usuario dijo ALLOW
+                val checkBox = findViewById<CheckBox>(R.id.checkBox)
+                checkBox.isChecked = true
+                lanzarNotificacionPopUp()
+            } else {
+                // Usuario dijo DON'T ALLOW
+                Toast.makeText(this, "Es necesario aceptar el permiso para recibir avisos.", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    // --- FUNCIONES DE NOTIFICACIÓN ---
+
+    private fun lanzarNotificacionPopUp() {
+        val intent = Intent(this, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        val pendingIntent = PendingIntent.getActivity(
+            this, 0, intent,
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        )
+
+        val builder = NotificationCompat.Builder(this, CHANNEL_ID_POPUP)
+            .setSmallIcon(android.R.drawable.ic_dialog_info)
+            .setContentTitle("¡BlockEx Activado!")
+            .setContentText("Permisos concedidos. !¡Puedes recibir notificaciones!!")
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
+            .setDefaults(NotificationCompat.DEFAULT_ALL)
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+            NotificationManagerCompat.from(this).notify(NOTIFICATION_ID, builder.build())
+        }
+    }
+
+    private fun createHighPriorityChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = "Avisos Urgentes BlockEx"
+            val importance = NotificationManager.IMPORTANCE_HIGH
+            val channel = NotificationChannel(CHANNEL_ID_POPUP, name, importance).apply {
+                description = "Notificaciones Pop-up"
+                enableVibration(true)
+                enableLights(true)
+            }
+            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
         }
     }
 
     private fun checkPermission(): Boolean {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            return ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.POST_NOTIFICATIONS
-            ) == PackageManager.PERMISSION_GRANTED
+            return ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
         }
         return true
     }
 
-    // Este método recibe la respuesta del usuario (SI o NO al permiso)
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == PERMISSION_REQUEST_CODE) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // El usuario dijo SÍ: Marcamos el check y lanzamos la notificación
-                val checkBox = findViewById<CheckBox>(R.id.checkBox)
-                checkBox.isChecked = true
-                mostrarNotificacionPersonalizada()
-            } else {
-                // El usuario dijo NO
-                Toast.makeText(this, "Permiso denegado. No podrás recibir avisos.", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-
-    private fun mostrarNotificacionPersonalizada() {
-        val builder = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setSmallIcon(android.R.drawable.ic_dialog_info)
-            .setContentTitle("Ajustes Actualizados")
-            .setContentText("Has activado las notificaciones de BlockEx.")
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-            .setAutoCancel(true)
-
-        with(NotificationManagerCompat.from(this)) {
-            if (ActivityCompat.checkSelfPermission(this@AjustesActivity, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
-                notify(NOTIFICATION_ID, builder.build())
-            }
-        }
-    }
-
-    private fun createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = "Ajustes Generales"
-            val importance = NotificationManager.IMPORTANCE_DEFAULT
-            val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
-                description = "Notificaciones de configuración"
-            }
-            val notificationManager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(channel)
-        }
-    }
-
     private fun mostrarDialogoAvisoLegal() {
         val builder = androidx.appcompat.app.AlertDialog.Builder(this)
-        builder.setTitle("Aviso Legal")
+        builder.setTitle("Aviso Legal y Privacidad")
         builder.setMessage(
-                "\n" +
-                "En BlockEx, entendemos que la información que usted almacena en nuestra plataforma —desde sus reflexiones personales en el diario hasta sus fotografías y registros de calendario— constituye una parte fundamental de su intimidad. Por ello, la protección de su privacidad no es solo una obligación legal para nosotros, sino el pilar central de nuestra ética operativa.\n" +
-                "\n" +
-                "1. Naturaleza de la Información Reconocemos que BlockEx alberga datos de carácter altamente sensible. Tratamos todas las entradas de texto, archivos multimedia (fotografías/vídeos) y patrones de uso con la máxima confidencialidad.\n" +
-                "\n" +
-                "2. Almacenamiento y Soberanía de Datos Su información le pertenece exclusivamente a usted. BlockEx está diseñada para priorizar el almacenamiento seguro. No tenemos acceso al contenido de sus entradas ni a sus fotografías personales. No comercializamos, cedemos ni compartimos su información con terceros para fines publicitarios ni de análisis de comportamiento.\n" +
-                "\n" +
-                "3. Seguridad de Archivos Multimedia Entendemos el valor sentimental y privado de las imágenes adjuntas a sus registros. Implementamos protocolos de seguridad para garantizar que estas solo sean accesibles a través de la aplicación y bajo su autorización explícita.\n" +
-                "\n" +
-                "4. Control del Usuario Usted mantiene el control total sobre sus datos. BlockEx garantiza su derecho a acceder, modificar, exportar o eliminar permanentemente cualquier información registrada en la aplicación en el momento que lo desee.\n" +
-                "\n" +
-                "Agradecemos la confianza depositada en BlockEx para salvaguardar sus recuerdos y pensamientos más personales.\n" +
-                "\n"
-               )
+            "1. Información General: El uso de esta aplicación implica la aceptación de estos términos.\n\n" +
+                    "2. Propiedad Intelectual: Todos los contenidos, diseños y códigos son propiedad exclusiva del desarrollador o sus licenciantes.\n\n" +
+                    "3. Responsabilidad: El desarrollador no se hace responsable del uso indebido de la app ni de posibles fallos técnicos temporales.\n\n" +
+                    "4. Privacidad: Los datos facilitados por el usuario se tratarán conforme al RGPD, garantizando su confidencialidad y seguridad. No se cederán datos a terceros sin consentimiento previo.\n\n" +
+                    "5. Derechos: Puede ejercer sus derechos de acceso, rectificación y supresión a través del correo de soporte proporcionado en la ficha de la aplicación."
+        )
         builder.setPositiveButton("Aceptar", null)
         builder.show()
     }
