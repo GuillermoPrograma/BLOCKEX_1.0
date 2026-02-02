@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#EBD3A2">
@@ -9,17 +10,35 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/bottomNavigation"
-        android:gravity="center"
+        android:gravity="center_horizontal"
         android:orientation="vertical"
         android:padding="16dp">
 
         <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
             android:fontFamily="@font/noto_serif_semibold_italic"
+            android:text="CALENDARIO"
+            android:textAlignment="center"
+            android:textColor="#4E4E4E"
+            android:textSize="24sp" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="192dp"
+            android:layout_height="139dp"
+            app:srcCompat="@drawable/corazon_png" />
+
+        <TextView
             android:id="@+id/contadorTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
-            android:text="Llevas 0 días de sanación"
+            android:fontFamily="@font/noto_serif_semibold_italic"
+            android:text="Llevas 0 días usando blockex"
             android:textColor="#4E4E4E"
             android:textSize="22sp"
             android:textStyle="bold" />
@@ -39,11 +58,11 @@
                 app:tint="#4E4E4E" />
 
             <TextView
-                android:fontFamily="@font/noto_serif_semibold_italic"
                 android:id="@+id/monthText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
+                android:fontFamily="@font/noto_serif_semibold_italic"
                 android:text="Mes Año"
                 android:textColor="#4E4E4E"
                 android:textSize="18sp"
@@ -81,9 +100,10 @@
         android:layout_alignParentBottom="true"
         android:background="#848061"
         app:itemIconSize="40dp"
-        app:itemIconTint="@color/nav_item_color"  app:itemTextColor="@color/nav_item_color" app:itemActiveIndicatorStyle="@null"
+        app:itemIconTint="@color/nav_item_color"
+        app:itemTextColor="@color/nav_item_color"
+        app:itemActiveIndicatorStyle="@null"
         app:labelVisibilityMode="unlabeled"
         app:menu="@menu/menuprueba" />
 
 </RelativeLayout>
-
