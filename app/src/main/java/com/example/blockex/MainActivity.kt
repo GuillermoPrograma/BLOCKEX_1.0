@@ -51,6 +51,13 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        val botonFotos = findViewById<Button>(R.id.seleccionImg)
+        calendarBtn.setOnClickListener{
+
+            val  intent= Intent(this, SelectorFotos ::class.java)
+            startActivity(intent)
+        }
+
         fechaTextView = findViewById(R.id.fecha)
         mostrarFechaConfigurada()
 
