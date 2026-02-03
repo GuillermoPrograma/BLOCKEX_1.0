@@ -3,11 +3,9 @@ package com.example.blockex
 import androidx.annotation.RequiresApi
 
 import android.app.AlertDialog
-import android.content.ContentValues
 import android.net.Uri
 import android.os.*
 import android.provider.DocumentsContract
-import android.provider.MediaStore
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.Button
@@ -60,8 +58,8 @@ class SelectorFotos : AppCompatActivity() {
         AlertDialog.Builder(this)
             .setTitle("Confirmación")
             .setMessage(
-                "Esta app ocultará temporalmente las imágenes seleccionadas " +
-                        "durante 1 minuto. Después podrás borrarlas definitivamente " +
+                "Esta app ocultará temporalmente las imágenes seleccionadas. " +
+                        "Después podrás borrarlas definitivamente " +
                         "o restaurarlas a la galería.\n\n¿Aceptas continuar?"
             )
             .setCancelable(false)
@@ -76,7 +74,7 @@ class SelectorFotos : AppCompatActivity() {
      */
     @RequiresApi(Build.VERSION_CODES.R)
     private fun ocultarYBorrar(uris: List<Uri>) {
-        val directorioOculto = File(cacheDir, "hidden_images")
+        val directorioOculto = File(filesDir, "hidden_images")
         directorioOculto.mkdirs()
 
         // Copiar cada imagen
@@ -84,13 +82,7 @@ class SelectorFotos : AppCompatActivity() {
             copiarAlDirectorio(uri, directorioOculto)
         }
 
-        // Solicitar borrado de la galería (diálogo del sistema)
         borradoTemporal(uris)
-
-        // Esperar 1 minuto
-        Handler(Looper.getMainLooper()).postDelayed({
-            borrarORecuperar()
-        }, 60_000)
     }
 
     /**
@@ -116,60 +108,6 @@ class SelectorFotos : AppCompatActivity() {
                 e.printStackTrace()
             }
         }
-    }
-
-    /**
-     * Diálogo después de 1 minuto
-     */
-    private fun borrarORecuperar() {
-        AlertDialog.Builder(this)
-            .setTitle("Tiempo finalizado")
-            .setMessage("¿Qué deseas hacer con las imágenes?")
-            .setPositiveButton("Borrar definitivamente") { _, _ ->
-                borrarDefinitivo()
-                showMessage("Imágenes borradas definitivamente")
-            }
-            .setNegativeButton("Restaurar a la galería") { _, _ ->
-                restaurarFotos()
-                showMessage("Imágenes restauradas")
-            }
-            .show()
-    }
-
-    /**
-     * Restaura las imágenes a la galería
-     */
-    private fun restaurarFotos() {
-        val hiddenDir = File(filesDir, "hidden_images")
-
-        hiddenDir.listFiles()?.forEach { file ->
-            val values = ContentValues().apply {
-                put(MediaStore.Images.Media.DISPLAY_NAME, file.name)
-                put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
-                put(
-                    MediaStore.Images.Media.RELATIVE_PATH,
-                    Environment.DIRECTORY_PICTURES
-                )
-            }
-
-            val uri = contentResolver.insert(
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                values
-            ) ?: return@forEach
-
-            contentResolver.openOutputStream(uri)?.use { output ->
-                file.inputStream().copyTo(output)
-            }
-        }
-
-        borrarDefinitivo()
-    }
-
-    /**
-     * Borra definitivamente los archivos ocultos
-     */
-    private fun borrarDefinitivo() {
-        File(filesDir, "hidden_images").deleteRecursively()
     }
 
     /**

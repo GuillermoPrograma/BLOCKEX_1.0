@@ -1,5 +1,6 @@
 package com.example.blockex
 
+import android.app.AlertDialog
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
@@ -177,7 +178,25 @@ class CalendarioActivity : AppCompatActivity() {
     }
 
     private fun ejecutarAccionFinDePlazo() {
-        // AQUI ES DONDE vA LO DE PILAR
+        AlertDialog.Builder(this)
+            .setTitle("Tiempo finalizado")
+            .setMessage("¿Qué deseas hacer con las imágenes?")
+            .setPositiveButton("Borrar definitivamente") { _, _ ->
+                GestorDeImagenes.borrarDefinitivo(this)
+                showMessage("Imágenes borradas definitivamente")
+            }
+            .setNegativeButton("Restaurar a la galería") { _, _ ->
+                GestorDeImagenes.restaurarFotos(this)
+                showMessage("Imágenes restauradas")
+            }
+            .show()
+    }
+
+    private fun showMessage(text: String) {
+        AlertDialog.Builder(this)
+            .setMessage(text)
+            .setPositiveButton("OK", null)
+            .show()
     }
 
     private fun actualizarContadorSanacion() {
