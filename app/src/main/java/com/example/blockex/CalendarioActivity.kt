@@ -1,6 +1,7 @@
 package com.example.blockex
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
@@ -89,10 +90,10 @@ class CalendarioActivity : AppCompatActivity() {
 
                     container.view.setOnClickListener {
                         val date = data.date
-                        if (selectedDates.contains(date)) selectedDates.remove(date)
-                        else selectedDates.add(date)
 
-                        calendarView.notifyDateChanged(date)
+                        val intent = Intent(this@CalendarioActivity, DiarioActivityEscribir::class.java)
+                        intent.putExtra("FECHA", date.toString())
+                        startActivity(intent)
                     }
                 } else {
                     container.textView.visibility = View.INVISIBLE

@@ -1,13 +1,12 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.ksp)
 }
 
 android {
     namespace = "com.example.blockex"
-    compileSdk {
-        version = release(36)
-    }
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.example.blockex"
@@ -56,4 +55,9 @@ dependencies {
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")//fechas
     implementation("androidx.preference:preference-ktx:1.2.1")
 
+    val room_version = "2.6.1"
+
+    implementation(libs.androidx.room.runtime) // Fíjate en los puntos
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
 }

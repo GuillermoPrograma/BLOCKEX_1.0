@@ -42,7 +42,7 @@
         android:id="@+id/btnImagen"
         android:layout_width="250dp"
         android:layout_height="250dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="104dp"
         android:adjustViewBounds="true"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="Botón Baul"
