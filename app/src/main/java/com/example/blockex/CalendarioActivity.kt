@@ -10,11 +10,14 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
+import com.example.blockex.bbdd.DiarioDatabase
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.kizitonwose.calendar.core.CalendarDay
 import com.kizitonwose.calendar.core.DayPosition
@@ -22,6 +25,9 @@ import com.kizitonwose.calendar.core.daysOfWeek
 import com.kizitonwose.calendar.view.CalendarView
 import com.kizitonwose.calendar.view.MonthDayBinder
 import com.kizitonwose.calendar.view.ViewContainer
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.YearMonth
@@ -38,7 +44,8 @@ class CalendarioActivity : AppCompatActivity() {
     private lateinit var btnPrevMonth: ImageButton
     private lateinit var btnNextMonth: ImageButton
 
-    private val selectedDates = mutableSetOf<LocalDate>()
+    private val fechasConEntrada = mutableSetOf<LocalDate>() // Para guardar lo que viene de la DB
+    private lateinit var db: DiarioDatabase // Instancia de la base de datos
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,30 +81,79 @@ class CalendarioActivity : AppCompatActivity() {
         actualizarContadorSanacion()
         verificarPlazo()
 
+
+
+        db = DiarioDatabase.getDatabase(this)
+        cargarFechasDesdeBaseDeDatos() // Nueva función
+
         val nav = findViewById<BottomNavigationView>(R.id.bottomNavigation)
         nav.setupNavigation(this, R.id.nav_calendario)
+    }
+
+    private fun cargarFechasDesdeBaseDeDatos() {
+        lifecycleScope.launch(Dispatchers.IO) {
+            val fechasStrings = db.diarioDao().obtenerFechasConEntrada()
+
+            val fechasParseadas = fechasStrings.mapNotNull {
+                try { LocalDate.parse(it) } catch (e: Exception) { null }
+            }
+
+            withContext(Dispatchers.Main) {
+                fechasConEntrada.clear()
+                fechasConEntrada.addAll(fechasParseadas)
+
+                // Solo refrescamos el calendario para que salgan los corazones
+                calendarView.notifyCalendarChanged()
+
+                // NO tocamos el contadorTxt aquí, dejamos que lo haga actualizarContadorSanacion()
+            }
+        }
+    }
+    override fun onResume() {
+        super.onResume()
+        // Recargamos los datos cada vez que la pantalla vuelve a estar al frente
+        cargarFechasDesdeBaseDeDatos()
     }
 
     private fun configurarCalendario() {
         calendarView.dayBinder = object : MonthDayBinder<DayViewContainer> {
             override fun create(view: View) = DayViewContainer(view)
+
             override fun bind(container: DayViewContainer, data: CalendarDay) {
+                // 1. Seteamos el número del día siempre
                 container.textView.text = data.date.dayOfMonth.toString()
 
                 if (data.position == DayPosition.MonthDate) {
                     container.textView.visibility = View.VISIBLE
+
+                    // 2. Pintamos el corazón si existe en la BBDD
                     actualizarVisualizacionDia(container, data.date)
 
-                    container.view.setOnClickListener {
-                        val date = data.date
+                    val hoy = LocalDate.now()
 
-                        val intent = Intent(this@CalendarioActivity, DiarioActivityEscribir::class.java)
-                        intent.putExtra("FECHA", date.toString())
-                        startActivity(intent)
+                    // 3. Estética: Días futuros con transparencia
+                    if (data.date.isAfter(hoy)) {
+                        container.textView.alpha = 0.3f
+                    } else {
+                        container.textView.alpha = 1.0f
+                    }
+
+                    // 4. ÚNICA Lógica de clic
+                    container.view.setOnClickListener {
+                        if (data.date.isAfter(hoy)) {
+                            Toast.makeText(this@CalendarioActivity, "Todo a su debido tiempo", Toast.LENGTH_SHORT).show()
+                        } else {
+                            // Si es hoy o pasado, vamos a escribir
+                            val intent = Intent(this@CalendarioActivity, DiarioActivityEscribir::class.java)
+                            intent.putExtra("FECHA", data.date.toString())
+                            startActivity(intent)
+                        }
                     }
                 } else {
+                    // Días de relleno (fuera del mes actual)
                     container.textView.visibility = View.INVISIBLE
                     container.selectionView.visibility = View.GONE
+                    container.view.setOnClickListener(null) // Quitamos el clic por seguridad
                 }
             }
         }
@@ -143,9 +199,10 @@ class CalendarioActivity : AppCompatActivity() {
     }
 
     private fun actualizarVisualizacionDia(container: DayViewContainer, date: LocalDate) {
-        if (selectedDates.contains(date)) {
+        // CAMBIO: Usamos 'fechasConEntrada' que es la que llenamos desde la base de datos
+        if (fechasConEntrada.contains(date)) {
             container.selectionView.visibility = View.VISIBLE
-            container.textView.setTextColor(Color.WHITE)
+            container.textView.setTextColor(Color.WHITE) // El texto se pone blanco sobre el corazón
         } else {
             container.selectionView.visibility = View.GONE
             container.textView.setTextColor(Color.BLACK)
@@ -208,7 +265,7 @@ class CalendarioActivity : AppCompatActivity() {
             val fechaInicio = LocalDate.parse(fechaInicioStr)
             val hoy = LocalDate.now()
             val diasTranscurridos = maxOf(0, ChronoUnit.DAYS.between(fechaInicio, hoy))
-            contadorTxt.text = "Llevas $diasTranscurridos usando Blockex"
+            contadorTxt.text = "Llevas $diasTranscurridos días usando Blockex"
         } else {
             contadorTxt.text = "Configura tu tiempo para empezar"
         }
