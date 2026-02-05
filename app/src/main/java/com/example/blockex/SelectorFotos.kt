@@ -3,6 +3,7 @@ package com.example.blockex
 import androidx.annotation.RequiresApi
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.net.Uri
 import android.os.*
 import android.provider.DocumentsContract
@@ -46,6 +47,10 @@ class SelectorFotos : AppCompatActivity() {
         btnConfirm.setOnClickListener {
             if (fotosSeleccionadas.isNotEmpty()) {
                 ocultarYBorrar(fotosSeleccionadas)
+
+                startActivity(Intent(this, DiarioActivityEscribir::class.java))
+                finish()
+
             } else {
                 showMessage("No has seleccionado imágenes")
             }

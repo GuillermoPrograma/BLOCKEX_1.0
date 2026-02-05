@@ -27,10 +27,7 @@ class SeleccionTiempoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         // Saltar la pantalla si ya está configurada, iría el calendario de mar
-        if (estaConfigurado()) {
-              startActivity(Intent(this, CalendarioActivity::class.java))
-              finish()
-              return}
+
 
 
         enableEdgeToEdge()

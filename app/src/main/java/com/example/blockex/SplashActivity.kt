@@ -53,7 +53,7 @@ class SplashActivity : AppCompatActivity() {
         videoView.start()
 
         videoView.setOnCompletionListener {
-            startActivity(Intent(this, CalendarioActivity::class.java))
+            startActivity(Intent(this, SeleccionTiempoActivity::class.java))
             finish()
         }
 
