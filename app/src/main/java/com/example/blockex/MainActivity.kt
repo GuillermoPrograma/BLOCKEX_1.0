@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         val botonFotos = findViewById<Button>(R.id.seleccionImg)
-        calendarBtn.setOnClickListener{
+        botonFotos.setOnClickListener{
 
             val  intent= Intent(this, SelectorFotos ::class.java)
             startActivity(intent)
