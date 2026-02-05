@@ -27,11 +27,11 @@ class SeleccionTiempoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         // Saltar la pantalla si ya está configurada, iría el calendario de mar
-        /*  if (estaConfigurado()) {
-              startActivity(Intent(this, MainActivity::class.java))
+        if (estaConfigurado()) {
+              startActivity(Intent(this, CalendarioActivity::class.java))
               finish()
-              return
-          }*/
+              return}
+
 
         enableEdgeToEdge()
         setContentView(R.layout.activity_seleccion_tiempo)
@@ -86,7 +86,7 @@ class SeleccionTiempoActivity : AppCompatActivity() {
         // Botón Confirmar
         botonAceptar.setOnClickListener {
             guardarTiempoEnPreferencias()
-            startActivity(Intent(this, MainActivity::class.java))
+            startActivity(Intent(this, SelectorFotos::class.java))
             finish()
         }
     }
@@ -138,11 +138,12 @@ class SeleccionTiempoActivity : AppCompatActivity() {
             apply()
         }
     }
+        private fun estaConfigurado(): Boolean {
+            val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+            return prefs.getBoolean("tiempo_configurado", false)
+        }
 
-    // Revisar si ya configuró
-/*  private fun estaConfigurado(): Boolean {
-      val prefs = PreferenceManager.getDefaultSharedPreferences(this)
-      return prefs.getBoolean("tiempo_configurado", false)
+/*
   }*/
 
   // Opcional: valores iniciales por defecto

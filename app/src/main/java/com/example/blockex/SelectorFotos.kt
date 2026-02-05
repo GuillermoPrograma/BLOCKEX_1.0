@@ -9,6 +9,7 @@ import android.provider.DocumentsContract
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.Button
+import androidx.preference.PreferenceManager
 import java.io.File
 
 class SelectorFotos : AppCompatActivity() {
@@ -103,6 +104,7 @@ class SelectorFotos : AppCompatActivity() {
     private fun borradoTemporal(uris: List<Uri>) {
         uris.forEach { uri ->
             try {
+
                 DocumentsContract.deleteDocument(contentResolver, uri)
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -119,4 +121,6 @@ class SelectorFotos : AppCompatActivity() {
             .setPositiveButton("OK", null)
             .show()
     }
+
+
 }

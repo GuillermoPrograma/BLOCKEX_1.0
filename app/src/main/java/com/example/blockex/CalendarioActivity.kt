@@ -91,21 +91,22 @@ class CalendarioActivity : AppCompatActivity() {
     }
 
     private fun cargarFechasDesdeBaseDeDatos() {
-        lifecycleScope.launch(Dispatchers.IO) {
-            val fechasStrings = db.diarioDao().obtenerFechasConEntrada()
+
+        lifecycleScope.launch(Dispatchers.IO) {//esta función actua de hilo secundario
+            val fechasStrings = db.diarioDao().obtenerFechasConEntrada()//lee Strings
 
             val fechasParseadas = fechasStrings.mapNotNull {
                 try { LocalDate.parse(it) } catch (e: Exception) { null }
-            }
+            }//estos String los convierte en fechas LocalDate
 
-            withContext(Dispatchers.Main) {
+            withContext(Dispatchers.Main) {//main es el hilo principal y también donde las fechas cobran sentido
                 fechasConEntrada.clear()
                 fechasConEntrada.addAll(fechasParseadas)
 
                 // Solo refrescamos el calendario para que salgan los corazones
                 calendarView.notifyCalendarChanged()
 
-                // NO tocamos el contadorTxt aquí, dejamos que lo haga actualizarContadorSanacion()
+
             }
         }
     }
@@ -116,8 +117,8 @@ class CalendarioActivity : AppCompatActivity() {
     }
 
     private fun configurarCalendario() {
-        calendarView.dayBinder = object : MonthDayBinder<DayViewContainer> {
-            override fun create(view: View) = DayViewContainer(view)
+        calendarView.dayBinder = object : MonthDayBinder<DayViewContainer> {//mira en que mes se encuentran los LocalDate y los visualiza
+        override fun create(view: View) = DayViewContainer(view)
 
             override fun bind(container: DayViewContainer, data: CalendarDay) {
                 // 1. Seteamos el número del día siempre
@@ -139,7 +140,7 @@ class CalendarioActivity : AppCompatActivity() {
                     }
 
                     // 4. ÚNICA Lógica de clic
-                    container.view.setOnClickListener {
+                    container.view.setOnClickListener {//vigila si es hoy o si es un día anterior
                         if (data.date.isAfter(hoy)) {
                             Toast.makeText(this@CalendarioActivity, "Todo a su debido tiempo", Toast.LENGTH_SHORT).show()
                         } else {
