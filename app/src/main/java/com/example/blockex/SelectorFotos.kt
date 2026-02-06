@@ -47,8 +47,13 @@ class SelectorFotos : AppCompatActivity() {
         btnConfirm.setOnClickListener {
             if (fotosSeleccionadas.isNotEmpty()) {
                 ocultarYBorrar(fotosSeleccionadas)
+                val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+                prefs.edit().apply {
+                    putBoolean("tiempo_configurado", true) // marca que ya configuró
 
-                startActivity(Intent(this, DiarioActivityEscribir::class.java))
+                    apply()
+                }
+                startActivity(Intent(this, CalendarioActivity::class.java))
                 finish()
 
             } else {

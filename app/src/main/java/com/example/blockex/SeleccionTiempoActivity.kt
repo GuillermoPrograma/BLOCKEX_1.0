@@ -27,7 +27,10 @@ class SeleccionTiempoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         // Saltar la pantalla si ya está configurada, iría el calendario de mar
-
+        if (estaConfigurado()) {
+            startActivity(Intent(this, CalendarioActivity::class.java))
+            finish()
+            return}
 
 
         enableEdgeToEdge()
@@ -129,7 +132,7 @@ class SeleccionTiempoActivity : AppCompatActivity() {
             putString("fecha_inicio_configuracion", fechaHoy)
 
 
-            putBoolean("tiempo_configurado", true) // marca que ya configuró
+            putBoolean("tiempo_configurado", false) // marca que ya configuró
 
 
             apply()
